@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:18-alpine
 
 # the creators of the node container created a user called node
 USER node
