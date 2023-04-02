@@ -17,4 +17,7 @@ COPY --chown=node:node index.js index.js
 # Add can also automatically unzip files such as a tar file.
 # ADD --chown=node:node index.js index.js 
 
+# What command to run by default (default executable) and any arguments
+# our base image also has a CMD in it and so 
+# docker considers the last CMD as the default executable command.
 CMD ["node","index.js"]

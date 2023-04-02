@@ -39,4 +39,7 @@ COPY --chown=node:node . .
 # It is better to use port mapping (--publish) when we run the container.
 EXPOSE 3000
 
+# What command to run by default (default executable) and any arguments
+# our base image also has a CMD in it and so 
+# docker considers the last CMD as the default executable command.
 CMD ["node","index.js"]
