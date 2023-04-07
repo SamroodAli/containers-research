@@ -1,0 +1,18 @@
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/home/node/app # workdir of Dockerfile, bind mount
+      - /home/node/app/node_modules # ignore node_modules
+    links:
+      - db # this also means db will be installed before web since web depends on db
+    environment:
+      MONGO_CONNECTION_STRING: mongodb://db:27017 # db is the name of the service in this url
+
+  db:
+    image: mongo:3
+    ports:
+      - "27017:27017"
