@@ -1,0 +1,25 @@
+version: "3"
+services:
+  web:
+    image: btholt/node-app # kubernetes need images and not build contexts
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/home/node/app # workdir of Dockerfile, bind mount
+      - /home/node/app/node_modules # ignore node_modules
+    links:
+      - db # this also means db will be installed before web since web depends on db
+    labels: # labels are used to add labels, give information about the containers
+      kompose.service.type: LoadBalancer # DON'T use this in production,
+      # we don't want every service to be load balanced as this would be expensive
+      # in AWS and other platforms. We would have a central load balancer or something
+      # but not dedicated load balancers such as this.
+      # This is because by adding kompose.service.type: LoadBalancer, many
+      # platforms like AWS will add dedicated load balancers
+    environment:
+      MONGO_CONNECTION_STRING: mongodb://db:27017 # db is the name of the service in this url
+
+  db:
+    image: mongo:3
+    ports:
+      - "27017:27017"
